@@ -107,7 +107,7 @@ export default function SignUpScreen() {
           onChangeText={setEmailAddress}
           placeholder="Adresse e-mail"
           keyboardType="email-address"
-          className="border border-gray-300 rounded-xl p-4 text-gray-800"
+          className="border border-gray-300 rounded-xl p-4 mb-4 text-gray-800"
         />
 
         <TextInput
