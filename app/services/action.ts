@@ -14,12 +14,10 @@ export async function getCurrentLocation() {
   };
 }
 
-
-// lib/actions.ts
 import Constants from "expo-constants";
 
 const BASE_URL =
-  Constants.expoConfig?.extra?.apiUrl || "http://localhost:3000/api";
+  Constants.expoConfig?.extra?.apiUrl || "http://localhost:3000/api"; // je vais revenir ici
 
 export const createOrFetchUser = async (token: string) => {
   try {
