@@ -14,8 +14,6 @@ export async function getCurrentLocation() {
   };
 }
 
-
-// lib/actions.ts
 import Constants from "expo-constants";
 
 const BASE_URL =
