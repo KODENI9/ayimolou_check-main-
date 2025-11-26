@@ -1,62 +1,43 @@
-import { Alert, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, View, Image } from "react-native";
 import { Link, useRouter } from "expo-router";
-import { Image } from "react-native";
-import "./globals.css";
 import * as AuthSession from 'expo-auth-session';
 import { useAuth, useSSO } from '@clerk/clerk-expo';
-import { createOrFetchUser } from "./services/action";
+import { createOrFetchUser } from "../utils/services/action";
 
 export default function RecapSms() {
   const { startSSOFlow } = useSSO();
-  const { getToken } = useAuth();
-  const router = useRouter();
 
+  const router = useRouter();
+  const { isSignedIn } = useAuth();
+  // ✅ Bouton Google SSO
   const onGooglePress = async () => {
     try {
-      const redirectUrl = AuthSession.makeRedirectUri({
-        scheme: 'ayimolou',
-        path: 'sso-callback',
-      });
+        if (isSignedIn) {
+    router.replace("/(tabs)/home");
+    return;
+  }
+      // Deep link pour Expo / React Native
+      
+const redirectUrl = AuthSession.makeRedirectUri({
+  scheme: 'ayimolou',
+  path: 'sso-callback',
+});
 
+console.log("Redirect URL utilisée pour SSO:", redirectUrl);
+
+      // Démarrer le flow OAuth avec Clerk
       const res = await startSSOFlow({
         strategy: 'oauth_google',
         redirectUrl,
       });
 
-      const { createdSessionId, setActive, signUp, signIn } = res;
+      const { createdSessionId, setActive } = res;
 
+      // Activer la session Clerk
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
       }
-
-      // Récupérer l'ID utilisateur Clerk
-      let clerkUserId: string | undefined;
-      if (signUp && (signUp as any).createdUserId) {
-        clerkUserId = (signUp as any).createdUserId;
-      }
-
-      if (!clerkUserId) {
-        console.log('Impossible de récupérer clerkUserId après SSO');
-        return;
-      }
-
-      // Après connexion réussie
-      const token = await getToken();
-      if (!token) {
-        Alert.alert('Erreur', 'Token non disponible');
-        return;
-      }
-
-      const response =  await createOrFetchUser(token);
-      console.log("Profil backend :", response);
-
-      if (!response.profileComplete) {
-        // Utiliser push au lieu de replace pour une navigation plus fluide
-        router.push("/(auth)/complete-profile" as any);
-      } else {
-        router.replace('/(tabs)/home');
-      }
-
+      
     } catch (err: any) {
       console.error('startSSOFlow error:', err);
       Alert.alert('Erreur', 'Connexion Google échouée.');

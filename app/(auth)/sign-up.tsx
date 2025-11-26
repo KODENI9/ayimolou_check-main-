@@ -72,68 +72,119 @@ export default function SignUpScreen() {
   // 🔹 Étape : Vérification du code
   if (pendingVerification) {
     return (
-      <SafeAreaView className="flex-1 justify-center items-center bg-white px-6">
-        <Text className="text-2xl font-bold text-gray-900 mb-6">
-          Vérifiez votre e-mail 📩
-        </Text>
-        <TextInput
-          value={code}
-          onChangeText={setCode}
-          placeholder="Entrez le code reçu"
-          keyboardType="numeric"
-          className="border border-gray-300 rounded-xl p-4 w-full text-gray-800 mb-4"
-        />
-        <TouchableOpacity
-          onPress={onVerifyPress}
-          className="bg-black w-full p-4 rounded-xl"
-        >
-          <Text className="text-white text-center font-semibold text-lg">
-            Vérifier
-          </Text>
-        </TouchableOpacity>
+      <SafeAreaView className="flex-1 bg-gradient-to-b from-gray-50 to-white">
+        <View className="flex-1 justify-center items-center px-6">
+          <View className="w-full max-w-sm">
+            <View className="items-center mb-8">
+              <View className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-yellow-400 items-center justify-center mb-4 shadow-lg">
+                <Text className="text-4xl">📩</Text>
+              </View>
+              <Text className="text-3xl font-bold text-gray-900 mb-2 text-center">
+                Vérifiez votre e-mail
+              </Text>
+              <Text className="text-gray-600 text-center">
+                Entrez le code reçu par e-mail
+              </Text>
+            </View>
+
+            <View className="mb-6">
+              <Text className="text-sm font-medium text-gray-700 mb-2 ml-1">
+                Code de vérification
+              </Text>
+              <TextInput
+                value={code}
+                onChangeText={setCode}
+                placeholder="123456"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numeric"
+                className="bg-white border-2 border-gray-200 rounded-2xl p-4 w-full text-gray-900 text-center text-2xl font-bold tracking-widest shadow-sm focus:border-primary"
+                maxLength={6}
+              />
+            </View>
+
+            <TouchableOpacity
+              onPress={onVerifyPress}
+              className="bg-primary w-full p-4 rounded-2xl shadow-lg active:opacity-90"
+            >
+              <Text className="text-gray-900 text-center font-bold text-lg">
+                Vérifier
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </SafeAreaView>
     );
   }
 
   // 🔹 Étape : Formulaire d'inscription
   return (
-    <SafeAreaView className="flex-1 justify-center items-center bg-white px-6">
-      <Text className="text-3xl font-bold text-gray-900 mb-8">Créer un compte ✨</Text>
+    <SafeAreaView className="flex-1 bg-gradient-to-b from-gray-50 to-white">
+      <View className="flex-1 justify-center items-center px-6">
+        <View className="w-full max-w-sm">
+          {/* Header avec logo */}
+          <View className="items-center mb-10">
+            <View className="w-200 h-20 rounded-full bg-gradient-to-br from-primary to-yellow-400 items-center justify-center mb-4 shadow-lg">
+              <Text className="text-2xl font-bold text-gray-900">AYIMOLOU</Text>
+            </View>
+            <Text className="text-4xl font-bold text-gray-900 mb-2">
+              Créer un compte ✨
+            </Text>
+            <Text className="text-gray-600 text-center">
+              Rejoignez-nous dès aujourd'hui
+            </Text>
+          </View>
 
-      <View className="w-full space-y-4">
-        <TextInput
-          autoCapitalize="none"
-          value={emailAddress}
-          onChangeText={setEmailAddress}
-          placeholder="Adresse e-mail"
-          keyboardType="email-address"
-          className="border border-gray-300 rounded-xl p-4 mb-4 text-gray-800"
-        />
+          <View className="w-full space-y-4">
+            <View>
+              <Text className="text-sm font-medium text-gray-700 mb-2 ml-1">
+                Adresse e-mail
+              </Text>
+              <TextInput
+                autoCapitalize="none"
+                value={emailAddress}
+                onChangeText={setEmailAddress}
+                placeholder="exemple@email.com"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="email-address"
+                className="bg-white border-2 border-gray-200 rounded-2xl p-4 text-gray-900 text-base shadow-sm focus:border-primary"
+              />
+            </View>
 
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Mot de passe"
-          secureTextEntry
-          className="border border-gray-300 rounded-xl p-4 text-gray-800"
-        />
+            <View>
+              <Text className="text-sm font-medium text-gray-700 mb-2 ml-1">
+                Mot de passe
+              </Text>
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                placeholder="••••••••"
+                placeholderTextColor="#9CA3AF"
+                secureTextEntry
+                className="bg-white border-2 border-gray-200 rounded-2xl p-4 text-gray-900 text-base shadow-sm focus:border-primary"
+              />
+              <Text className="text-xs text-gray-500 mt-2 ml-1">
+                Au moins 8 caractères avec majuscule, minuscule, chiffre et symbole
+              </Text>
+            </View>
 
-        <TouchableOpacity
-          onPress={onSignUpPress}
-          className="bg-black w-full p-4 rounded-xl mt-4"
-        >
-          <Text className="text-white text-center text-lg font-semibold">
-            Continuer
-          </Text>
-        </TouchableOpacity>
-
-        <View className="flex-row justify-center mt-4">
-          <Text className="text-gray-700">Déjà un compte ? </Text>
-          <Link href="/sign-in" asChild>
-            <TouchableOpacity>
-              <Text className="text-blue-600 font-semibold">Se connecter</Text>
+            <TouchableOpacity
+              onPress={onSignUpPress}
+              className="bg-primary w-full p-4 rounded-2xl mt-6 shadow-lg active:opacity-90"
+            >
+              <Text className="text-gray-900 text-center text-lg font-bold">
+                Continuer
+              </Text>
             </TouchableOpacity>
-          </Link>
+
+            <View className="flex-row justify-center mt-6">
+              <Text className="text-gray-600">Déjà un compte ? </Text>
+              <Link href="/(auth)/sign-in" asChild>
+                <TouchableOpacity>
+                  <Text className="text-primary font-bold">Se connecter</Text>
+                </TouchableOpacity>
+              </Link>
+            </View>
+          </View>
         </View>
       </View>
     </SafeAreaView>
